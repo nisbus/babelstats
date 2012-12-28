@@ -5,5 +5,6 @@ deps/*
 rel/*
 !rel/reltool.config
 !rel/files/*
+!rel/files/
 calc_lexer.erl
 calc_parser.erl
