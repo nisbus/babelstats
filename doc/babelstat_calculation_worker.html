@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Module babelstat_calculation_worker</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module babelstat_calculation_worker</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+     The workers actually call the database recursively (if needed) and
+     return the results.
+<p>Copyright © (C) 2011, nisbus</p>
+
+<p><b>Behaviours:</b> <a href="gen_fsm.html"><tt>gen_fsm</tt></a>.</p>
+<p><b>Authors:</b> nisbus (<a href="mailto:nisbus@gmail.com"><tt>nisbus@gmail.com</tt></a>), omarkj (<a href="mailto:omarkj@gmail.com"><tt>omarkj@gmail.com</tt></a>).</p>
+
+<h2><a name="description">Description</a></h2>
+     The workers actually call the database recursively (if needed) and
+     return the results.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-babel_date">babel_date()</a></h3>
+<p><tt>babel_date() = <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-db_result">db_result()</a></h3>
+<p><tt>db_result() = [{binary(), float() | integer() | atom | list()}]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-frequency">frequency()</a></h3>
+<p><tt>frequency() = seconds | minutes | hours | days | weeks | months | years</tt></p>
+
+
+<h3 class="typedecl"><a name="type-geo">geo()</a></h3>
+<p><tt>geo() = [{float(), float()}]</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#code_change-4">code_change/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#doing_calculation-2">doing_calculation/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_event-3">handle_event/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_info-3">handle_info/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_sync_event-4">handle_sync_event/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#init-1">init/1</a></td><td></td></tr>
+<tr><td valign="top"><a href="#start_link-3">start_link/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#terminate-3">terminate/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#waiting_for_workers-2">waiting_for_workers/2</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="code_change-4">code_change/4</a></h3>
+<div class="spec">
+<p><tt>code_change(OldVsn, StateName, State, Extra) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="doing_calculation-2">doing_calculation/2</a></h3>
+<div class="spec">
+<p><tt>doing_calculation(X1::start, State::#state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}) -&gt; {stop, normal, #state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}} | {next_state, waiting_for_workers, #state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}} | {stop, error, #state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="handle_event-3">handle_event/3</a></h3>
+<div class="spec">
+<p><tt>handle_event(Event, StateName, State) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="handle_info-3">handle_info/3</a></h3>
+<div class="spec">
+<p><tt>handle_info(Info, StateName, State) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="handle_sync_event-4">handle_sync_event/4</a></h3>
+<div class="spec">
+<p><tt>handle_sync_event(Event, From, StateName, State) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="init-1">init/1</a></h3>
+<div class="spec">
+<p><tt>init(X1) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="start_link-3">start_link/3</a></h3>
+<div class="spec">
+<p><tt>start_link(Query::#babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, Filter::#babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, Callback::function()) -&gt; {ok, Pid::pid()}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="terminate-3">terminate/3</a></h3>
+<div class="spec">
+<p><tt>terminate(Reason, StateName, State) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="waiting_for_workers-2">waiting_for_workers/2</a></h3>
+<div class="spec">
+<p><tt>waiting_for_workers(X1::{result, Results::#babelstat_series{series = undefined | [{<a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, float()}], metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = <a href="#type-geo">geo()</a> | undefined, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), legend = undefined | binary()}} | {error, no_document_found}, State::#state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}) -&gt; {stop, normal, #state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}} | {stop, error, #state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}} | {next_state, waiting_for_workers, #state{callback = undefined | function(), search_query = undefined | #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, filter = undefined | #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, workers = undefined | integer(), algebra = string() | undefined, result = undefined | any()}}</tt><br></p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Dec 28 2012, 15:35:07.</i></p>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{application,babelstat}.
+{packages,[]}.
+{modules,[babel_calc,babelstat,babelstat_api,babelstat_calculation,
+          babelstat_calculation_sup,babelstat_calculation_worker,
+          babelstat_couch_http,babelstat_cowboy_handler,
+          babelstat_cowboy_rest_handler,babelstat_sup,babelstat_utils,
+          calc_lexer,calc_parser,document_creator,gen_babelstat_db]}.

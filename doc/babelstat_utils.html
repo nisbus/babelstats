@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Module babelstat_utils</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module babelstat_utils</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+     Various utility functions used by the babelstat server.
+<p>Copyright © (C) 2011, nisbus</p>
+
+<p><b>Authors:</b> nisbus (<a href="mailto:nisbus@gmail.com"><tt>nisbus@gmail.com</tt></a>).</p>
+
+<h2><a name="description">Description</a></h2>
+     Various utility functions used by the babelstat server.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-babel_date">babel_date()</a></h3>
+<p><tt>babel_date() = <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-db_result">db_result()</a></h3>
+<p><tt>db_result() = [{binary(), float() | integer() | atom | list()}]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-frequency">frequency()</a></h3>
+<p><tt>frequency() = seconds | minutes | hours | days | weeks | months | years</tt></p>
+
+
+<h3 class="typedecl"><a name="type-geo">geo()</a></h3>
+<p><tt>geo() = [{float(), float()}]</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#convert_docs_to_series-4">convert_docs_to_series/4</a></td><td></td></tr>
+<tr><td valign="top"><a href="#create_constants_series-5">create_constants_series/5</a></td><td>creates a constant series (one value).</td></tr>
+<tr><td valign="top"><a href="#date_adjust-6">date_adjust/6</a></td><td>Aggregates documents to a common timeframe (Needs optimizing).</td></tr>
+<tr><td valign="top"><a href="#function_operators-0">function_operators/0</a></td><td></td></tr>
+<tr><td valign="top"><a href="#transpose-1">transpose/1</a></td><td>Transposes a list of lists.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="convert_docs_to_series-4">convert_docs_to_series/4</a></h3>
+<div class="spec">
+<p><tt>convert_docs_to_series(Babelstat_query::#babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, Babelstat_filter::#babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, X3::{Values::[float()], Dates::[<a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>]}, Docs::[#babelstat{id = undefined | binary(), rev = undefined | binary(), type = undefined | atom | babelstat, date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, value = undefined | float(), metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = undefined | <a href="#type-geo">geo()</a>, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), calculation = undefined | binary(), constant = undefined | boolean(), created_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}]) -&gt; #babelstat_series{series = undefined | [{<a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, float()}], metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = <a href="#type-geo">geo()</a> | undefined, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), legend = undefined | binary()}</tt><br></p>
+</div>
+
+<h3 class="function"><a name="create_constants_series-5">create_constants_series/5</a></h3>
+<div class="spec">
+<p><tt>create_constants_series(Babelstat_query::#babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, Babelstat_filter::#babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, Value::float(), DocScale::integer(), DocMetric::binary() | atom()) -&gt; #babelstat_series{series = undefined | [{<a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, float()}], metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = <a href="#type-geo">geo()</a> | undefined, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), legend = undefined | binary()}</tt><br></p>
+</div><p>creates a constant series (one value)</p>
+
+<h3 class="function"><a name="date_adjust-6">date_adjust/6</a></h3>
+<div class="spec">
+<p><tt>date_adjust(Values::[float()], Dates::[<a href="#type-babel_date">babel_date()</a>], Frequency::<a href="#type-frequency">frequency()</a>, Docs::[<a href="#type-db_result">db_result()</a>], StartDate::<a href="#type-babel_date">babel_date()</a>, EndDate::<a href="#type-babel_date">babel_date()</a>) -&gt; {Values::[float()], Dates::[<a href="#type-babel_date">babel_date()</a>], Docs::[<a href="#type-db_result">db_result()</a>]}</tt><br></p>
+</div><p>Aggregates documents to a common timeframe (Needs optimizing)</p>
+
+<h3 class="function"><a name="function_operators-0">function_operators/0</a></h3>
+<div class="spec">
+<p><tt>function_operators() -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="transpose-1">transpose/1</a></h3>
+<div class="spec">
+<p><tt>transpose(L::[list()]) -&gt; [list()]</tt><br></p>
+</div><p>Transposes a list of lists.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Dec 28 2012, 15:35:07.</i></p>
+</body>
+</html>

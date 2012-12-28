@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Module babelstat_api</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module babelstat_api</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+     The api used internally by the web server.
+<p>Copyright © (C) 2011, nisbus</p>
+
+<p><b>Authors:</b> nisbus (<a href="mailto:nisbus@gmail.com"><tt>nisbus@gmail.com</tt></a>), omarkj (<a href="mailto:omarkj@gmail.com"><tt>omarkj@gmail.com</tt></a>).</p>
+
+<h2><a name="description">Description</a></h2>
+     The api used internally by the web server.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-babel_date">babel_date()</a></h3>
+<p><tt>babel_date() = <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-db_result">db_result()</a></h3>
+<p><tt>db_result() = [{binary(), float() | integer() | atom | list()}]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-frequency">frequency()</a></h3>
+<p><tt>frequency() = seconds | minutes | hours | days | weeks | months | years</tt></p>
+
+
+<h3 class="typedecl"><a name="type-geo">geo()</a></h3>
+<p><tt>geo() = [{float(), float()}]</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#create_filter-5">create_filter/5</a></td><td>
+     Creates a babelstat_filter record from given values.</td></tr>
+<tr><td valign="top"><a href="#create_query-5">create_query/5</a></td><td>
+     Creates a babelstat_query record from given values.</td></tr>
+<tr><td valign="top"><a href="#result_to_json-1">result_to_json/1</a></td><td>
+    Turns a babelstat_series into a json ready form.</td></tr>
+<tr><td valign="top"><a href="#result_to_proplist-1">result_to_proplist/1</a></td><td>
+    Converts a babelstat_series record to a proplist.</td></tr>
+<tr><td valign="top"><a href="#run_query-3">run_query/3</a></td><td>
+    Runs a query on the server (this is IT).</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="create_filter-5">create_filter/5</a></h3>
+<div class="spec">
+<p><tt>create_filter(Metric::binary(), Scale::integer(), Frequency::<a href="#type-frequency">frequency()</a>, FromDate::<a href="#type-babel_date">babel_date()</a> | undefined, ToDate::<a href="#type-babel_date">babel_date()</a> | undefined) -&gt; #babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>} | invalid_filter</tt><br></p>
+</div><p>
+     Creates a babelstat_filter record from given values.</p>
+
+<h3 class="function"><a name="create_query-5">create_query/5</a></h3>
+<div class="spec">
+<p><tt>create_query(Category::binary(), SubCategory::binary(), Subject::binary(), SeriesCategory::binary(), Title::binary()) -&gt; #babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()} | invalid_query</tt><br></p>
+</div><p>
+     Creates a babelstat_query record from given values.</p>
+
+<h3 class="function"><a name="result_to_json-1">result_to_json/1</a></h3>
+<div class="spec">
+<p><tt>result_to_json(Babelstat_series::#babelstat_series{series = undefined | [{<a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, float()}], metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = <a href="#type-geo">geo()</a> | undefined, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), legend = undefined | binary()}) -&gt; [term()]</tt><br></p>
+</div><p>
+    Turns a babelstat_series into a json ready form</p>
+
+<h3 class="function"><a name="result_to_proplist-1">result_to_proplist/1</a></h3>
+<div class="spec">
+<p><tt>result_to_proplist(Babelstat_series::#babelstat_series{series = undefined | [{<a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, float()}], metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = <a href="#type-geo">geo()</a> | undefined, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), legend = undefined | binary()}) -&gt; [term()]</tt><br></p>
+</div><p>
+    Converts a babelstat_series record to a proplist</p>
+
+<h3 class="function"><a name="run_query-3">run_query/3</a></h3>
+<div class="spec">
+<p><tt>run_query(Query::#babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, Filter::#babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}, Callback::function()) -&gt; {ok, Pid::pid()}</tt><br></p>
+</div><p>
+    Runs a query on the server (this is IT).</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Dec 28 2012, 15:35:07.</i></p>
+</body>
+</html>

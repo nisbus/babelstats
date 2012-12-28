@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Module babelstat_couch_http</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module babelstat_couch_http</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#types">Data Types</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>
+     A http couchdb implementation instead of the native one.
+<p>Copyright © (C) 2012,</p>
+
+<p><b>Authors:</b> nisbus (<a href="mailto:nisbus@gmail.com"><tt>nisbus@gmail.com</tt></a>).</p>
+
+<h2><a name="description">Description</a></h2>
+     A http couchdb implementation instead of the native one.
+<h2><a name="types">Data Types</a></h2>
+
+<h3 class="typedecl"><a name="type-babel_date">babel_date()</a></h3>
+<p><tt>babel_date() = <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a></tt></p>
+
+
+<h3 class="typedecl"><a name="type-db_result">db_result()</a></h3>
+<p><tt>db_result() = [{binary(), float() | integer() | atom | list()}]</tt></p>
+
+
+<h3 class="typedecl"><a name="type-frequency">frequency()</a></h3>
+<p><tt>frequency() = seconds | minutes | hours | days | weeks | months | years</tt></p>
+
+
+<h3 class="typedecl"><a name="type-geo">geo()</a></h3>
+<p><tt>geo() = [{float(), float()}]</tt></p>
+
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#query_database-2">query_database/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#save_document-1">save_document/1</a></td><td></td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="query_database-2">query_database/2</a></h3>
+<div class="spec">
+<p><tt>query_database(Babelstat_query::#babelstat_query{category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary()}, Babelstat_filter::#babelstat_filter{metric = undefined | binary() | atom, scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, from_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, to_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}) -&gt; {ok, Results::[#babelstat{id = undefined | binary(), rev = undefined | binary(), type = undefined | atom | babelstat, date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, value = undefined | float(), metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = undefined | <a href="#type-geo">geo()</a>, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), calculation = undefined | binary(), constant = undefined | boolean(), created_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>}]} | no_results</tt><br></p>
+</div>
+
+<h3 class="function"><a name="save_document-1">save_document/1</a></h3>
+<div class="spec">
+<p><tt>save_document(Babelstat::#babelstat{id = undefined | binary(), rev = undefined | binary(), type = undefined | atom | babelstat, date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>, value = undefined | float(), metric = undefined | binary(), scale = undefined | integer(), frequency = undefined | <a href="#type-frequency">frequency()</a>, location = undefined | <a href="#type-geo">geo()</a>, category = undefined | binary(), sub_category = undefined | binary(), subject = undefined | binary(), series_category = undefined | binary(), title = undefined | binary(), source = undefined | binary(), calculation = undefined | binary(), constant = undefined | boolean(), created_date = undefined | <a href="calendar.html#type-t_datetime1970">calendar:t_datetime1970()</a>} | <a href="#type-db_result">db_result()</a>) -&gt; ok | error</tt><br></p>
+</div>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Dec 28 2012, 15:35:07.</i></p>
+</body>
+</html>
