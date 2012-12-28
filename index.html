@@ -31,44 +31,80 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+        <h3>Welcome to Babelstats.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>The Babelstats application is useful for serving data from a database through a restful interface.
+   It has other features too :)</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<h3>Philosophy</h3>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>All numerical data can be treated as a time-series (static data will just have one date).
+   All numerical data can be categorized using 6 dimensions (6 degrees of separation).
+</p>
 
-<h3>Designer Templates</h3>
+<h3>Getting started</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>To start using Babelstats you need to have 3 things installed on your machine:
+  <ul>
+    <li>Babelstats</li>
+    <li>CouchDB (You can use a hosted solution like cloudant)</li>
+    <li>NginX (if you host both babelstats and couchdb on the same machine)  
+        See the nginx.config in the repository</li>
+  </ul>
+  After you have setup all the necessary things you will need to get the couchapps into couchdb.
+  There are several ways to do that (couchapp, kanso, erica).
+  Now that the database is prepped and your server is running you need some documents in the database.
+  Take a look at the document_creator.erl which creates some sample documents. You might want to change something in there like the categories and titles if you like, or even start with real data.
+  After your data is in couchdb you should be able to browse to http://localhost/babelstat/index.html and see the interface for charting data from the database.
+  The GUI is very crude and only meant for demonstration purposes. 
+</p>
 
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<h3>Why?</h3>
+<p>
+  When dealing with a lot of statistical data from different sources, comparisons get quite hairy.
+  Imagine getting the GDP (Gross domestic product) of all the countries in the world into a single database.
+  All of the numbers are specified in the local currency of the country and the scale of the economy (billions, millions etc.)
+  How do you compare them on a graph?
+  Babelstats lets you put the data in to the database as the source specifies it, you only need to let it know a few metrics of each datapoint.
+  <ul>
+    <li>Metric: The metric can be a currency, temerature, measurement (km, miles etc)</li>
+    <li>Scale: The scale is a multiplier of one unit of metric</li>
+    <li>Frequency: This can be hourly, daily etc. and is used to aggregate lower frequency data when comparing with higher frequency data.</li>
+  </ul>
+  Example:
+   US GDP:  Metric=USD, Scale=1000000,Frequency=monthly.
+  When you query Babelstats you can give it the metrics you want the result to be and it will convert the data for you before returning.
+  
+  Another powerful feature are the calculated series.
+  A lot of statistical information is derived from base statistics i.e. GDP per capita is the Gross Domestic Product divided by the population of a country.
+  Imagine not having to store all this derived data but calculate it when requested.
+  A calculated series in Babelstats is a single document that defines the calculation as a string of document queries and mathematical operators.
+  Example (GDP per capita):
+    {Countries,USA,Economy,Total,Key Statistics,GDP}/{Countries,USA,Census,Total,Population,All}
+    
+  When you call this series, Babelstats will call the database requesting both of those series and divide one with the other for each series point it finds.
+  There is no limit as to the recursiveness of the calculations, that is if one of the series in a calculation is a calculation itself it will traverse the database
+  until it gets to the source and then calculate upwards towards the result.
+  Of course metrics play a key role here in converting all parts of the calculation to a common logical metric.
+</p>
 
 <h3>Authors and Contributors</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Babelstats was first created during the 48 hour Erlang competition; Spawnfest in 2011 by <a href="http://github.com/omarkj" class="user-mention">@omarkj</a> and <a href="http://github.com/nisbus" class="user-mention">@nisbus</a>.
+</p>
 
-<h3>Support or Contact</h3>
+<h3>Documentation</h3>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>You can find further code documentation <a href="">here<\a>.</p>
+
       </section>
     </div>
-
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">Babelstats maintained by <a href="https://github.com/nisbus">nisbus</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
-    </div>
-
-    
-
+    </div>   
   </body>
 </html>
