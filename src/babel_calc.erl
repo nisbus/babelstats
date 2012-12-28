@@ -1,8 +1,9 @@
 %%%-------------------------------------------------------------------
-%%% @author nisbus <>
+%%% @author nisbus <nisbus@gmail.com>
 %%% @copyright (C) 2011, nisbus
 %%% @doc
-%%%
+%%%   Evaluates string algebra to numerical results, i.e. "5+5" -> 10.
+%%%   Also supports calculating a single algebraic formula for timeseries.
 %%% @end
 %%% Created :  9 Jul 2011 by nisbus <>
 %%%-------------------------------------------------------------------

@@ -1,6 +1,6 @@
 {application, babelstat,
  [
-  {description, ""},
+  {description, "Statistics server for numerical data (especially time-series)"},
   {vsn, "0.1"},
   {registered, []},
   {applications, [

@@ -1,3 +1,12 @@
+%%%-------------------------------------------------------------------
+%%% @author nisbus <nisbus@gmail.com>
+%%% @author omarkj <omarkj@gmail.com>
+%%% @copyright (C) 2011, nisbus
+%%% @doc
+%%%   Supervisor for calculation workers
+%%% @end
+%%% Created :  9 Jul 2011 by omarkj <omarkj@gmail.com>
+%%%-------------------------------------------------------------------
 -module(babelstat_calculation_sup).
 
 -behaviour(supervisor).

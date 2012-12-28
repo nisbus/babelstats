@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
-%%% @author nisbus <>
+%%% @author nisbus <nisbus@gmail.com>
 %%% @copyright (C) 2011, nisbus
 %%% @doc
 %%% Used for testing purposes only
 %%% @end
-%%% Created :  9 Jul 2011 by nisbus <>
+%%% Created :  9 Jul 2011 by nisbus <nisbus@gmail.com>
 %%%-------------------------------------------------------------------
 -module(document_creator).
 
@@ -27,12 +27,6 @@ send_documents_to_couchdb(Category, SubCategory, Subject, SeriesCategory, Title,
 			  ?DB_MODULE:save_document(Doc)
 		  end,Docs).
    
-%%--------------------------------------------------------------------
-%% @doc
-%% @spec
-%% @end
-%%--------------------------------------------------------------------
-
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================

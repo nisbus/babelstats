@@ -1,3 +1,13 @@
+%%%-------------------------------------------------------------------
+%%% @author nisbus <nisbus@gmail.com>
+%%% @author omarkj <omarkj@gmail.com>
+%%% @copyright (C) 2011, nisbus
+%%% @doc
+%%%   The workers actually call the database recursively (if needed) and
+%%%   return the results. 
+%%% @end
+%%% Created :  9 Jul 2011 by omarkj <omarkj@gmail.com>
+%%%-------------------------------------------------------------------
 -module(babelstat_calculation_worker).
 
 -behaviour(gen_fsm).

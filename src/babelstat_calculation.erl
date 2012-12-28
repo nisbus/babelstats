@@ -1,3 +1,13 @@
+%%%-------------------------------------------------------------------
+%%% @author nisbus <nisbus@gmail.com>
+%%% @author omarkj <omarkj@gmail.com>
+%%% @copyright (C) 2011, nisbus
+%%% @doc
+%%%   creates calculation workers for calculations that need it and 
+%%%   waits for their response.
+%%% @end
+%%% Created :  9 Jul 2011 by omarkj <omarkj@gmail.com>
+%%%-------------------------------------------------------------------
 -module(babelstat_calculation).
 
 -behaviour(gen_server).

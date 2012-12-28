@@ -2,7 +2,23 @@
 %%% @author nisbus <nisbus@gmail.com>
 %%% @copyright nisbus (C) 2012, 
 %%% @doc
+%%%   A websocket handler for the babelstat service.
+%%%   Takes a json document for calling for data in the form:
+%%%   {"query":
+%%%     {"category" : "cat",
+%%%      "sub_category" : "sub",
+%%%      "subject" : "subject",
+%%%      "series_category" : "series_category", 
+%%%      "title": "title",
+%%%      "frequency":"frequency",
+%%%      "scale":"scale",
+%%%      "metric":"metric",
+%%%      "from_date": "optional",
+%%%      "to_date": "optional"}
+%%%    }
 %%%
+%%%    This is mainly for fun and has no real use cases, use the rest 
+%%%    interface instead :)
 %%% @end
 %%% Created : 26 Dec 2012 by nisbus <nisbus@gmail.com>
 %%%-------------------------------------------------------------------
@@ -85,21 +101,3 @@ handle_message(Msg,Req,#state{callback = Callback} = State) ->
     Filter = babelstat_api:create_filter(Metric,Scale0,Frequency0,From,To),
     babelstat_api:run_query(Query, Filter,Callback),
     {ok, Req,State}.
-
-%% to_int(Val) when is_binary(Val) ->
-%%     to_int(binary_to_list(Val));
-%% to_int(Val) when is_list(Val) ->
-%%     list_to_integer(Val);
-%% to_int(Val) when is_integer(Val) ->
-%%     Val;
-%% to_int(_) ->
-%%     0.
-
-%% to_float(Val) when is_binary(Val) ->
-%%     to_float(binary_to_list(Val));
-%% to_float(Val) when is_list(Val) ->
-%%     list_to_float(Val);
-%% to_float(Val) when is_float(Val) ->
-%%     Val;
-%% to_float(_) ->
-%%     0.0.

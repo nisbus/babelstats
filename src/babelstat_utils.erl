@@ -1,10 +1,10 @@
 %%%-------------------------------------------------------------------
-%%% @author nisbus <>
+%%% @author nisbus <nisbus@gmail.com>
 %%% @copyright (C) 2011, nisbus
 %%% @doc
-%%%
+%%%   Various utility functions used by the babelstat server.
 %%% @end
-%%% Created :  9 Jul 2011 by nisbus <>
+%%% Created :  9 Jul 2011 by nisbus <nisbus@gmail.com>
 %%%-------------------------------------------------------------------
 -module(babelstat_utils).
 -include("../include/babelstat.hrl").
@@ -17,6 +17,7 @@ function_operators() ->
 %%%===================================================================
 %%% API
 %%%===================================================================
+
 %%@doc Transposes a list of lists.
 -spec transpose([list()]) -> [list()].
 transpose([]) -> [];
@@ -50,6 +51,7 @@ date_adjust(Values, Dates, Frequency, Docs, StartDate, EndDate) ->
 	    {Values,Dates,Docs}
     end.
 
+%%% Converts a list of documents to a babelstat_series.
 -spec convert_docs_to_series(#babelstat_query{}, #babelstat_filter{},
 			     {Values::[float()], Dates::[calendar:t_datetime1970()]}, Docs::[#babelstat{}]) ->
 				   #babelstat_series{}.
@@ -74,6 +76,7 @@ convert_docs_to_series(#babelstat_query{ category = Category,
 		      frequency = Frequency, category = Category, sub_category = Sub_Category, 
 		      subject = Subject, series_category = Series_Category, title = Title}.
 
+%%% @doc creates a constant series (one value)
 -spec create_constants_series(#babelstat_query{},
 			      #babelstat_filter{}, Value :: float(), DocScale :: integer(),
 			      DocMetric :: binary() | atom()) -> #babelstat_series{}.
@@ -101,6 +104,7 @@ create_constants_series(#babelstat_query{ category = Category,
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+%%% @hidden
 aggregate_docs(DocList,NewFreq) ->
     lists:foldl(fun(O,Acc) ->
 			{NoV, _,_} = Acc,
@@ -108,7 +112,7 @@ aggregate_docs(DocList,NewFreq) ->
 			{V+NoV, D,Doc#babelstat{frequency = NewFreq}}
 		end,{0.0,undefined,undefined},DocList).
 
-
+%%% @hidden
 -spec create_legend(#babelstat_query{}, #babelstat_filter{}) ->
 			   binary().
 create_legend(#babelstat_query{ category = Category,
@@ -125,6 +129,7 @@ create_legend(#babelstat_query{ category = Category,
 %%%===================================================================
 %%% Date helper functions
 %%%===================================================================
+%%% @hidden
 is_date_in_range(Range, Date)->
     case length(Range) of 
 	0 ->
@@ -147,10 +152,12 @@ is_date_in_range(Range, Date)->
 %%%===================================================================
 %%% Metric and scale helper functions
 %%%===================================================================
+%%% @hidden
 -spec convert_metric(binary(), binary(), float()) -> float().
 convert_metric(OriginalMetric, NewMetric, Value) ->
     measurements:convert(binary_to_list(OriginalMetric), binary_to_list(NewMetric), Value).
 
+%%% @hidden
 -spec convert_scale(integer(), integer(), float()) -> float().
 convert_scale(OriginalScale, NewScale, Value) ->
     case OriginalScale =:= NewScale of
@@ -168,6 +175,7 @@ convert_scale(OriginalScale, NewScale, Value) ->
 %%%===================================================================
 %%% Metric and scale helper functions
 %%%===================================================================
+%%% @hidden
 -spec parse_calculation(binary()) -> {[#babelstat_query{}], string()}.		       
 parse_calculation(Calculation1) ->
     Calculation = binary_to_list(Calculation1),
@@ -199,6 +207,7 @@ parse_calculation(Calculation1) ->
 			end,Tokens),
     {Queries, PrettyAlgebra}.
     
+%%% @hidden
 is_string_number(X) ->
     case catch list_to_integer(X) of
 	{'EXIT',_} ->
@@ -212,6 +221,7 @@ is_string_number(X) ->
 	    true
     end.
 
+%%% @hidden
 -spec replace(string(),string(), string()) -> string().
 replace(Original, ToReplace, ReplaceWith) ->
     Index = string:str(Original,ToReplace),
@@ -220,7 +230,7 @@ replace(Original, ToReplace, ReplaceWith) ->
     RightSide = string:substr(Original,Index+Len),
     lists:append([LeftSide,ReplaceWith,RightSide]).
 
-
+%%% @hidden
 -spec replace_tokens_with_values(Albegra::string(), List::[float()]) -> [string()].					
 replace_tokens_with_values(Algebra,List) ->
     Tokens = string:tokens(Algebra,"()+-/*^"),
@@ -243,6 +253,7 @@ replace_tokens_with_values(Algebra,List) ->
 		  end,Transposed),
     [{D,Result} || {D,{Result,_}} <- R].
     
+%%% @hidden
 replace_token_with_value(Original, ToReplace, ReplaceWith) ->
     R = case ReplaceWith of
 	X when is_float(X) ->
@@ -257,6 +268,7 @@ replace_token_with_value(Original, ToReplace, ReplaceWith) ->
     [Float] = io_lib:format("~.6f",[R]),
     LeftSide++Float++RightSide.
 
+%%% @hidden
 -spec simplify_algebra(string(),string()) -> string().			  
 simplify_algebra(Tokens,Calculation) ->
     TokenCount = length(Tokens),    
@@ -270,4 +282,3 @@ simplify_algebra(Tokens,Calculation) ->
 				replace(Acc,Token,Char)
 			end,Calculation,lists:seq(1,TokenCount))
     end.
-

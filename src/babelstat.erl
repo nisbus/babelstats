@@ -1,3 +1,13 @@
+%%%-------------------------------------------------------------------
+%%% @author nisbus <nisbus@gmail.com>
+%%% @author omarkj <omarkj@gmail.com>
+%%% @copyright (C) 2011, nisbus
+%%% @doc
+%%%   The babelstat application.
+%%%   Creates the dispatch rules and starts the web server.
+%%% @end
+%%% Created :  9 Jul 2011 by nisbus <nisbus@gmail.com>
+%%%-------------------------------------------------------------------
 -module(babelstat).
 
 -behaviour(application).

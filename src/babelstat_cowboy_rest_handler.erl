@@ -1,8 +1,18 @@
 %%%-------------------------------------------------------------------
 %%% @author nisbus <nisbus@gmail.com>
-%%% @copyright nisbus (C) 2012, 
+%%% @copyright (C) 2012, nisbus
 %%% @doc
+%%%   Restful interface for the babelstat api.
+%%%   You query the database using the query and filter ex.
+%%  ``
+%%  http://localhost/babelstat?category="category"&sub_category="sub_category"&
+%%   subject="subject"&series_category="series_category"&title="title"&
+%%   frequency="frequency"&metric="metric"&scale="scale"
+%%  ''
 %%%
+%%   ``You can add the optional &from_date="iso formatted date"&to_date="iso formatted date"''
+%%%
+%%%   The response will tell you if any of the parameters are missing.  
 %%% @end
 %%% Created : 27 Dec 2012 by nisbus <nisbus@gmail.com>
 %%%-------------------------------------------------------------------
@@ -14,9 +24,11 @@
 %%%===================================================================
 %%% API
 %%%===================================================================
+%%%@hidden
 init({tcp,http},Req,_Opts) ->
     {ok, Req,undefined_state}.
 
+%%%@hidden
 handle(Req,State) -> 
     case get_query_and_filter(Req) of
 	{ok, Query, Filter} ->
@@ -51,10 +63,11 @@ handle(Req,State) ->
 	    {ok, Req2,State}
     end.
 
-
+%%%@hidden
 terminate(_Req,_State) ->
     ok.
 
+%%%@hidden
 get_query_and_filter(Req) ->
     {Category,_} = cowboy_req:qs_val(<<"category">>,Req),
     {SubCategory,_} = cowboy_req:qs_val(<<"sub_category">>,Req),
