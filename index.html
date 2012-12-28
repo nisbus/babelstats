@@ -46,25 +46,25 @@
 
 <p>To start using Babelstats you need to have 3 things installed on your machine:
   <ul>
-    <li>Babelstats</li>
-    <li>CouchDB (You can use a hosted solution like cloudant)</li>
-    <li>NginX (if you host both babelstats and couchdb on the same machine)  
-        See the nginx.config in the repository</li>
+    <li><a href="http://github.com/nisbus/babelstats">Babelstats</a></li>
+    <li><a href="http://couchdb.apache.org/">CouchDB</a> (You can use a hosted solution like cloudant)</li>
+    <li><a href="nginx.org">nginx</a> (if you host both babelstats and couchdb on the same machine)  
+        See the nginx.config in the babelstats repository</li>
   </ul>
-  After you have setup all the necessary things you will need to get the couchapps into couchdb.
-  There are several ways to do that (couchapp, kanso, erica).
-  Now that the database is prepped and your server is running you need some documents in the database.
-  Take a look at the document_creator.erl which creates some sample documents. You might want to change something in there like the categories and titles if you like, or even start with real data.
-  After your data is in couchdb you should be able to browse to http://localhost/babelstat/index.html and see the interface for charting data from the database.
+  After you have setup all the necessary things you will need to get the couchapps into couchdb.</br>
+  There are several ways to do that (couchapp, kanso, erica).</br></br>
+  Now that the database is prepped and your server is running you need some documents in the database.</br>
+  Take a look at the document_creator.erl which creates some sample documents. You might want to change something in there like the categories and titles if you like, or even start with real data.</br>
+  After your data is in couchdb you should be able to browse to <a href="http://localhost/babelstat/index.html">http://localhost/babelstat/index.html</a> and see the interface for charting data from the database.</br>
   The GUI is very crude and only meant for demonstration purposes. 
 </p>
 
 <h3>Why?</h3>
 <p>
   When dealing with a lot of statistical data from different sources, comparisons get quite hairy.
-  Imagine getting the GDP (Gross domestic product) of all the countries in the world into a single database.
-  All of the numbers are specified in the local currency of the country and the scale of the economy (billions, millions etc.)
-  How do you compare them on a graph?
+  Imagine getting the GDP (Gross domestic product) of all the countries in the world into a single database.</br>
+  All of the numbers are specified in the local currency of the country and the scale of the economy (billions, millions etc.)</br>
+  How do you compare them on a graph?</br>
   Babelstats lets you put the data in to the database as the source specifies it, you only need to let it know a few metrics of each datapoint.
   <ul>
     <li>Metric: The metric can be a currency, temerature, measurement (km, miles etc)</li>
@@ -72,30 +72,33 @@
     <li>Frequency: This can be hourly, daily etc. and is used to aggregate lower frequency data when comparing with higher frequency data.</li>
   </ul>
   Example:
-   US GDP:  Metric=USD, Scale=1000000,Frequency=monthly.
-  When you query Babelstats you can give it the metrics you want the result to be and it will convert the data for you before returning.
-  
-  Another powerful feature are the calculated series.
-  A lot of statistical information is derived from base statistics i.e. GDP per capita is the Gross Domestic Product divided by the population of a country.
-  Imagine not having to store all this derived data but calculate it when requested.
-  A calculated series in Babelstats is a single document that defines the calculation as a string of document queries and mathematical operators.
+   US GDP:  Metric=USD, Scale=1000000,Frequency=monthly.</br>
+  When you query Babelstats you can give it the metrics you want the result to be and it will convert the data for you before returning.</br>
+  </br>
+  Another powerful feature are the calculated series.</br>
+  A lot of statistical information is derived from base statistics i.e. GDP per capita is the Gross Domestic Product divided by the population of a country.</br>
+  Imagine not having to store all this derived data but calculate it when requested.</br>
+  A calculated series in Babelstats is a single document that defines the calculation as a string of document queries and mathematical operators.</br>
+</br>
   Example (GDP per capita):
     {Countries,USA,Economy,Total,Key Statistics,GDP}/{Countries,USA,Census,Total,Population,All}
-    
-  When you call this series, Babelstats will call the database requesting both of those series and divide one with the other for each series point it finds.
+</br></br>    
+  When you call this series, Babelstats will call the database requesting both of those series and divide one with the other for each series point it finds.</br>
   There is no limit as to the recursiveness of the calculations, that is if one of the series in a calculation is a calculation itself it will traverse the database
-  until it gets to the source and then calculate upwards towards the result.
+  until it gets to the source and then calculate upwards towards the result.</br>
   Of course metrics play a key role here in converting all parts of the calculation to a common logical metric.
 </p>
 
 <h3>Authors and Contributors</h3>
 
-<p>Babelstats was first created during the 48 hour Erlang competition; Spawnfest in 2011 by <a href="http://github.com/omarkj" class="user-mention">@omarkj</a> and <a href="http://github.com/nisbus" class="user-mention">@nisbus</a>.
+<p>Babelstats was first created during the 48 hour Erlang competition; Spawnfest in 2011 by <a href="http://github.com/omarkj" class="user-mention">omarkj</a> and <a href="http://github.com/nisbus" class="user-mention">nisbus</a>.</br>
+You can still see the original results at <a href="http://github.com/spawnfest/babelstat">spawnfest babelstat repo</a>
 </p>
 
 <h3>Documentation</h3>
 
-<p>You can find further code documentation <a href="http://nisbus.github.com/babelstats/doc/index.html">here<\a>.</p>
+<p>You can find further code documentation <a href="http://nisbus.github.com/babelstats/doc/index.html">here </a>.
+</p>
 
       </section>
     </div>
