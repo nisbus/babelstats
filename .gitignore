@@ -1,0 +1,8 @@
+ebin
+*~
+*.beam
+deps/*
+rel/*
+!rel/reltool.config
+calc_lexer.erl
+calc_parser.erl

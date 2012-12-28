@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BabelStat</title>
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="account"></div>
+
+    <h1>BabelStat</h1>
+
+    <div id="profile"></div>
+
+
+    <div id="menu">
+      <h3>Select your data:</h3>
+      <div>
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">1</P>
+	</div>
+	<select id="categories_drop"></select> 
+
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">2</P>
+	</div>
+	<select id="sub_categories_drop" onchange=></select> 
+	
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">3</P>
+	</div>
+	<select id="subjects_drop"></select> 
+	
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">4</P>
+	</div>
+	<select id="series_categories_drop"></select> 
+	
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">5</P>
+	</div>
+	<select id="title_drop"></select> 
+      </div>
+    </div>
+   <!--
+     <div id="sidebar">
+      <p>Welcome to Babelstat.</p>
+      <p>Select the data you want from the selection box.</p>
+    </div>
+    <div id="items"></div>
+-->
+    <div id="filter">
+      <h3>Set a filter</h3>
+      <div>
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">6</P>
+	</div>
+	<select id="frequencies_drop">
+	  <option>seconds</option>
+	  <option>minutes</option>
+	  <option>hours</option>
+	  <option>days</option>
+	  <option>weeks</option>
+	  <option>months</option>
+	  <option>quarters</option>
+	  <option>years</option>
+	</select>
+
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">7</P>
+	</div>
+	<select id="metrics_drop"></select>
+
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">8</P>
+	</div>
+	<select id="scale_drop">
+	  <option>1</option>
+	  <option>10</option>
+	  <option>100</option>
+	  <option>1000</option>
+	  <option>10000</option>
+	  <option>100000</option>
+	  <option>1000000</option>
+	  <option>10000000</option>
+	  <option>100000000</option>
+	  <option>1000000000</option>
+	</select>      
+
+	<div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">9</P>
+        </div>
+	<div style="float:left;">
+        <input type="text" id="datepickerFrom"></input>
+	</div>
+        <div class="circle">
+	  <p style="color:white; text-align:center;margin-top: 4.5em">10</P>
+	</div>
+	<div style="float:left;">
+	<input type="text" id="datepickerTo"></input>
+	</div>
+      </div>
+    </div>
+
+
+    <div id="data">
+      <input type="button" id="data_btn" value="Get Data"></input>
+      <div id="container">
+      </div>
+    </div>
+
+
+
+<!--
+    <script type="text/javascript">
+	   $(document).ready(function() {	   
+	       var fromPicker = $("#datepickerFrom");
+	       $("#datepickerFrom").datepicker({clickInput:true});
+
+	    });
+    </script>
+-->
+  </body>  
+<!--
+  <script src="loader.js"></script>
+-->
+  <script src="highcharts.js" type="text/javascript"></script>
+  <script type="text/javascript" charset="utf-8">
+    var chart;
+/*
+    $.couch.app(function(app) {
+      $("#account").evently("account", app);
+      $("#profile").evently("profile", app);
+      $.evently.connect("#account","#profile", ["loggedIn","loggedOut"]);
+      $("#items").evently("items", app);
+*/
+      var baseurl = "http://localhost/couchdb/babelstat/_design/babelstat_common/_view/";
+
+      $.ajax({url: baseurl+"frequencies?group=true",
+             success: function(data){
+                                      $("#frequencies_drop").empty().append("<option>Select a frequency</option>"); 
+                                      var rows = JSON.parse(data).rows;
+                                      rows.forEach(function(row){
+                                        $("#frequencies_drop").append("<option>"+row.key+"</option>");                              
+                                      })
+                                    }       
+             });
+      $.ajax({url: baseurl+"metrics?group=true",
+             success: function(data){
+                                      $("#metrics_drop").empty().append("<option>Select a metric</option>"); 
+    
+                                      var rows = JSON.parse(data).rows;
+                                      rows.forEach(function(row){
+                                        $("#metrics_drop").append("<option>"+row.key+"</option>");                              
+                                      })
+                                    }       
+             });
+
+      $("#categories_drop").append("<option>Select a category</option>");                              
+      $.ajax({url: baseurl+"categories?group=true",
+             success: function(data){
+                                      var rows = JSON.parse(data).rows;
+                                      rows.forEach(function(row){
+                                        $("#categories_drop").append("<option>"+row.key+"</option>");                              
+                                      })
+                                    }       
+             });
+
+      $("#categories_drop").change(function(value,ignore){          
+
+          $("#sub_categories_drop").empty().append("<option>Select a sub category</option>"); 
+          $.ajax({url: baseurl+'sub_categories?group=true&keys=[\"'+value.target.value+'\"]',
+                success: function(data){
+                                         var rows = JSON.parse(data).rows;
+                                         rows[0].value.forEach(function(row){
+                                            $("#sub_categories_drop").append("<option>"+row+"</option>");                              
+                                         })
+                                       }       
+             });         
+      });
+      $("#sub_categories_drop").change(function(value,ignore){          
+          $("#subjects_drop").empty().append("<option>Select a subject</option>"); 
+
+          var category_drp = $("#categories_drop");
+          var category = category_drp[0].value
+          var sub_category = value.target.value; 
+          $.ajax({url: baseurl+'subjects?group=true&start_key=[\"'+category+'\",\"'+sub_category+'\"]&end_key=[\"'+category+'\",\"'+sub_category+'\"]',
+                success: function(data){
+                                         var rows = JSON.parse(data).rows;
+                                         rows[0].value.forEach(function(row){
+                                            $("#subjects_drop").append("<option>"+row+"</option>");                              
+                                         })
+                                       }       
+             });         
+      });
+      $("#subjects_drop").change(function(value,ignore){          
+          $("#series_categories_drop").empty().append("<option>Select a series category</option>"); 
+
+          var category = $("#categories_drop")[0].value;
+          var sub_category = $("#sub_categories_drop")[0].value; 
+          var subject = value.target.value;
+          $.ajax({url: baseurl+'series_categories?group=true&start_key=[\"'+category+'\",\"'+sub_category+'\",\"'+subject+'\"]&end_key=[\"'+category+'\",\"'+sub_category+'\",\"'+subject+'\"]',
+                success: function(data){
+                                         var rows = JSON.parse(data).rows;
+                                         rows[0].value.forEach(function(row){
+                                            $("#series_categories_drop").append("<option>"+row+"</option>");                              
+                                         })
+                                       }       
+             });         
+      });
+      $("#series_categories_drop").change(function(value,ignore){          
+          $("#title_drop").empty().append("<option>Select a series</option>"); 
+          var category = $("#categories_drop")[0].value;
+          var sub_category = $("#sub_categories_drop")[0].value; 
+          var subject = $("#subjects_drop")[0].value;
+          var series_category = value.target.value;
+          $.ajax({url: baseurl+'titles?group=true&start_key=[\"'+category+'\",\"'+sub_category+'\",\"'+subject+'\",\"'+series_category+'\"]&end_key=[\"'+category+'\",\"'+sub_category+'\",\"'+subject+'\",\"'+series_category+'\"]',
+                success: function(data){
+                                         var rows = JSON.parse(data).rows;
+                                         rows[0].value.forEach(function(row){
+                                            $("#title_drop").append("<option>"+row+"</option>");                              
+                                         })
+                                       }       
+             });         
+      });
+      
+      $("#data_btn").click(function() {
+         var base = "http://localhost/babelstat?";
+         var category = "category=%22"+$("#categories_drop")[0].value+"%22&";
+         var sub_category = "sub_category=%22"+$("#sub_categories_drop")[0].value+"%22&"; 
+         var subject = "subject=%22"+$("#subjects_drop")[0].value+"%22&";
+         var series_category = "series_category=%22"+$("#series_categories_drop")[0].value+"%22&";
+         var series = "series=%22"+$("#title_drop")[0].value+"%22&";
+         var frequency = "frequency=%22"+$("#frequencies_drop")[0].value+"%22&";
+         var scale = "scale=%22"+$("#scale_drop")[0].value+"%22&";
+         var metric = "metric=%22"+$("#metrics_drop")[0].value+"%22";
+         var calling_url = base+category+sub_category+subject+series_category+series+frequency+scale+metric;
+          $.ajax({url: calling_url,
+                  success: function(data){
+                                           console.log(data);
+                                           d = JSON.parse(data);
+                                           var newData = [];
+                                           dates = d[0].dates,
+                                           values = d[1].values;
+                                           legend = d[12].legend;
+                                           for(i = 0; i < dates.length;i++){
+							    newData.push([new Date(dates[i]).getTime(), values[i]]);
+							  };
+					   chart.addSeries({
+                                                             name: legend,
+                                                             data: newData
+							  });
+                                         }
+             });         
+      });
+
+      chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container',
+	    zoomtype: 'x'
+        },
+        title: {
+            text: 'Your babelstat data'
+        },
+        xAxis: {
+            type: 'datetime',
+	    maxZoom: 7 * 24 * 3600000 // one week
+        },
+        yAxis: {
+            title: {
+                text: 'Values'
+            },
+	    min: -100,
+   	    showFirstLabel: false							  
+        },
+      });
+/*
+    });
+*/
+  </script>    
+</html>

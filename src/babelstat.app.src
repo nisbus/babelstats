@@ -1,0 +1,18 @@
+{application, babelstat,
+ [
+  {description, ""},
+  {vsn, "0.1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+		  inets,
+		  crypto,
+		  public_key,
+		  ssl,
+		  jiffy,
+	          cowboy
+                 ]},
+  {mod, { babelstat, []}},
+  {env, []}
+ ]}.
