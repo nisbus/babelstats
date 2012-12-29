@@ -135,7 +135,8 @@
       $.evently.connect("#account","#profile", ["loggedIn","loggedOut"]);
       $("#items").evently("items", app);
 */
-      var baseurl = "http://localhost/couchdb/babelstat/_design/babelstat_common/_view/";
+      var baseurl = 
+"http://couchdb.nisbus.com/babelstat/_design/babelstat_common/_view/";
 
       $.ajax({url: baseurl+"frequencies?group=true",
              success: function(data){
@@ -226,7 +227,7 @@
       });
       
       $("#data_btn").click(function() {
-         var base = "http://localhost/babelstat?";
+         var base = "http://babelstat.nisbus.com?";
          var category = "category=%22"+$("#categories_drop")[0].value+"%22&";
          var sub_category = "sub_category=%22"+$("#sub_categories_drop")[0].value+"%22&"; 
          var subject = "subject=%22"+$("#subjects_drop")[0].value+"%22&";

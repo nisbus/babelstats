@@ -47,7 +47,7 @@ start(_StartType, _StartArgs) ->
 			 {mimetypes, [{<<".js">>, [<<"text/javascript">>]}]}]},
 		      {'_', babelstat_cowboy_rest_handler,[]}
 		 ]}],
-    cowboy:start_http(http,100,[{port, 8080}],[{dispatch, Dispatch}]),
+    cowboy:start_http(http,100,[{port, 8081}],[{dispatch, Dispatch}]),
     babelstat_sup:start_link().
 
 stop(_State) ->

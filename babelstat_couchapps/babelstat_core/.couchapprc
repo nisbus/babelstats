@@ -1,7 +1,7 @@
 {
     "env": {
 	"default": {
-	    "db": "https://localhost:5984/babelstat"
+	    "db": "http://localhost:5984/babelstat"
 	}	    
     }   
 }
