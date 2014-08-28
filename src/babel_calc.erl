@@ -16,6 +16,7 @@
 %%%===================================================================
 -spec eval(Algebra :: string()) -> float().
 eval(Algebra) ->
+    io:format("Algebra ~p~n",[Algebra]),
     {ok,Ts,_} = calc_lexer:string(Algebra),
     {ok, Result} = calc_parser:parse(Ts),
     Result.

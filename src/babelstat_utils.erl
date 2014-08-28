@@ -277,7 +277,8 @@ simplify_algebra(Tokens,Calculation) ->
 	    erlang:error("this version of BabelStat only supports calculations of up to 26 variables (UPPERCASE ASCII)");
 	false ->
 	    lists:foldl(fun(N,Acc) ->
-				Char = integer_to_list(64+N),
+				Char = 
+io_lib:format("~p",[erlang:make_ref()]),%integer_to_list(64+N),
 				Token = lists:nth(N,Tokens),
 				replace(Acc,Token,Char)
 			end,Calculation,lists:seq(1,TokenCount))
