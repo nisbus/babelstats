@@ -8,3 +8,4 @@ rel/*
 !rel/files/
 calc_lexer.erl
 calc_parser.erl
+/_build
